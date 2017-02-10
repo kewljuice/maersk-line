@@ -1,1 +1,0 @@
-2017/02/10 09:23:49 [error] 7#7: *3 open() "/var/www/html/favicon.ico" failed (2: No such file or directory), client: 172.19.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
