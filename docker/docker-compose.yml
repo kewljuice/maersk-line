@@ -24,6 +24,10 @@ services:
             - mysql
         networks:
             - maersk-seacraft
+    drush:
+        image: cargo:drupal
+        depends_on:
+            - php
     mysql:
         image: mysql
         ports:

@@ -7,7 +7,4 @@ MAINTAINER ctrl.be
 # Install PHP Dependencies
 RUN docker-php-ext-install opcache pdo pdo_mysql mysqli
 
-# Install Drush
-# RUN apt-get -y install drush
-
 # That's all folks
