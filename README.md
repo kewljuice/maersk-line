@@ -1,5 +1,9 @@
 # MAERSK LINE
 
+## Install docker for mac via
+
+Get the latest stable installation from [docs.docker.com](https://docs.docker.com/docker-for-mac/)
+
 ## Configuration
 
 * browse to maersk folder in terminal
