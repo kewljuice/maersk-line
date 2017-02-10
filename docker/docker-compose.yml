@@ -35,6 +35,16 @@ services:
             MYSQL_PASSWORD: db_secret
         networks:
             - maersk-seacraft
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        depends_on:
+            - mysql
+        ports:
+            - "8181:80"
+        environment:
+            PMA_HOST: mysql
+        networks:
+            - maersk-seacraft
 networks:
     maersk-seacraft:
         driver: bridge

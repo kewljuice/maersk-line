@@ -22,4 +22,5 @@ sh cleanup.sh
 
 ## Browse
 
-* open browser and go to [localhost:8080](http://localhost:8080)
+* application: open browser and go to [localhost:8080](http://localhost:8080)
+* phpyadmin: open browser and go to [localhost:8181](http://localhost:8181)
