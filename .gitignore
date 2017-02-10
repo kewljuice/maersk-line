@@ -1,0 +1,12 @@
+# Ignore paths that contain user-generated content.
+.idea
+
+# Ignore caches.
+*.sql
+*.tar
+*.zip
+*.gz
+
+# Ignore ds_store.
+/.DS_Store
+*/.DS_Store
