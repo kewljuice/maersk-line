@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# docker up
+# Docker-Compose up
 cd docker
 docker-compose stop
 docker-compose rm -f
