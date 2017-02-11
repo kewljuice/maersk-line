@@ -12,6 +12,7 @@ RUN \
  cron \
  nano \
  git \
+ mysql-client \
  unzip
 
 # Install Drush Dependencies
