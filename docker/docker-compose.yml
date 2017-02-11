@@ -3,7 +3,7 @@ services:
     application:
         image: tianon/true
         volumes:
-            - ./../data/www:/var/www/html
+            - ./../data/www:/var/www/
     www:
         image: nginx:latest
         mem_limit: 256m
