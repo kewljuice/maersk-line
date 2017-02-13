@@ -31,8 +31,6 @@ services:
         image: cargo:drupal
         volumes_from:
             - application
-        depends_on:
-            - php
         networks:
             - maersk-seacraft
     mysql:
