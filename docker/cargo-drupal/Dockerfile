@@ -26,14 +26,8 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
 RUN docker-php-ext-install -j$(nproc) gd
 
 # Install Drush Dependencies
-RUN \
-    curl -sS https://getcomposer.org/installer | php && \
-    mv composer.phar /usr/local/bin/composer && \
-    ln -s /usr/local/bin/composer /usr/bin/composer && \
-    git clone --branch master https://github.com/drush-ops/drush/ /usr/local/src/drush && \
-    cd /usr/local/src/drush && \
-    git checkout 8.x && \
-    ln -s /usr/local/src/drush/drush /usr/bin/drush && \
-    composer install
+ENV DRUSH_VERSION 8.1.2
+RUN curl -L --silent https://github.com/drush-ops/drush/releases/download/${DRUSH_VERSION}/drush.phar \
+  > /usr/local/bin/drush && chmod +x /usr/local/bin/drush
 
 # That's all folks
