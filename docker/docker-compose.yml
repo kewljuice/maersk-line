@@ -27,10 +27,19 @@ services:
             - application
         networks:
             - maersk-seacraft
-    drush:
+    drupal:
         image: cargo:drupal
         volumes_from:
             - application
+        networks:
+            - maersk-seacraft
+    build:
+        image: cargo:drupal
+        volumes_from:
+            - application
+        depends_on:
+            - drupal
+        command: "bash /var/www/generate.sh"
         networks:
             - maersk-seacraft
     mysql:
