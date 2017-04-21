@@ -259,7 +259,7 @@ then
     civiKey=$(date |md5 | head -c32)
 
     #! Unpack the latest package and verify permissions.
-    curl "https://download.civicrm.org/civicrm-4.7.16-drupal.tar.gz" -o civicrm.tar.gz
+    curl -L "https://download.civicrm.org/civicrm-4.7.16-drupal.tar.gz" -o civicrm.tar.gz
     tar -xf civicrm.tar.gz -C sites/all/modules/contrib/
     rm -rf civicrm.tar.gz
     chmod 775 sites/default
