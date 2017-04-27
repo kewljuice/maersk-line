@@ -54,9 +54,9 @@ touch exclude-list.txt
 printf '%s\n' "${excludeList[@]}" > exclude-list.txt
 
 #! Create .gitignore from list.
-gitignoreList=("# Ignore configuration files that may contain sensitive information." "html/sites/*/*settings.php")
-gitignoreList=("${gitignoreList[@]}" "# Ignore paths that contain user-generated content." ".idea" "html/sites/*/files" "html/sites/*/private")
-gitignoreList=("${gitignoreList[@]}" "# Ignore caches." ".idea" "html/sites/all/drush/dump.sql" "*.sql" "*.tar" "*.zip" "*.gz")
+gitignoreList=("# Ignore configuration files that may contain sensitive information." "www/sites/*/*settings.php")
+gitignoreList=("${gitignoreList[@]}" "# Ignore paths that contain user-generated content." ".idea" "www/sites/*/files" "www/sites/*/private")
+gitignoreList=("${gitignoreList[@]}" "# Ignore caches." ".idea" "www/sites/all/drush/dump.sql" "*.sql" "*.tar" "*.zip" "*.gz" "www/sites/all/civicrm/extensions/cache")
 gitignoreList=("${gitignoreList[@]}" "# Ignore ds_store." "/.DS_Store" "*/.DS_Store" "*.DS_Store")
 gitignoreList=("${gitignoreList[@]}" "# Ignore generate script(s)." "generate.sh" "cleanup.sh")
 touch .gitignore
@@ -246,16 +246,15 @@ drush en -y $featureList;
 cd $drupal_root
 
 #! Install CiviCRM.
-echo "Install CiviCRM (y/n)?" >> $logfile
+echo "${cp}Install CiviCRM (y/n)?${cx}"
 read answer
-answer="y"
-if echo "$answer" | grep -iq "^y";
+if echo "$answer" | grep -iq "^y" ;
 then
 
     #TODO Ask for CiviCRM site-url.
 
     #! CiviCRM variables.
-    civiUrl='http://localhost:8080/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
+    civiUrl='http://generator.dev/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
     civiKey=$(date |md5 | head -c32)
 
     #! Unpack the latest package and verify permissions.
@@ -280,7 +279,9 @@ then
     git add -A
     git commit -m "Downloaded Feature: ctrl_feature_civicrm." --quiet
 
-    #TODO Create CiviCRM folders.
+    #! Create CiviCRM folders.
+    mkdir www/sites/all/civicrm
+    mkdir www/sites/all/civicrm/extensions
 
     #! Create CiviCRM database via MySQL.
     dbCiviCRM=$projectName'_c'
@@ -312,7 +313,21 @@ then
 
     #TODO Remove CiviCRM feature.
 
-    #TODO Commit CiviCRM to GIT.
+    #! Download & enable CiviCRM extensions.
+    civicrm_root=$(pwd)
+    cd sites/all/civicrm/extensions
+    extensionList="be.ctrl.superstyler"
+    for i in "${extensionList[@]}"
+    do
+        git clone https://github.com/kewljuice/$i
+        rm -rf $i/.git
+        #! Commit Extensions to GIT.
+        git add -A
+        git commit -m "Downloaded Extension: $i." --quiet
+        #! Activate Extension.
+        drush civicrm-ext-install $i
+    done
+    cd $civicrm_root
 
     #! Clean caches.
     drush cc civicrm
