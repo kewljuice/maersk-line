@@ -247,7 +247,8 @@ cd $drupal_root
 
 #! Install CiviCRM.
 echo "${cp}Install CiviCRM (y/n)?${cx}"
-read answer
+#read answer
+answer=y
 if echo "$answer" | grep -iq "^y" ;
 then
 
