@@ -4,9 +4,9 @@ services:
         image: tianon/true
         volumes:
             - ./../data/www:/var/www/
+            - ./../data/logs:/var/logs/
     www:
         image: nginx:latest
-        mem_limit: 256m
         ports:
             - "8080:80"
         volumes_from:
@@ -39,6 +39,10 @@ services:
             - application
         depends_on:
             - drupal
+        environment:
+            - projectInput=demo
+            - enableCivicrm=y
+            - civiUrl=http://localhost:8080/
         command: "bash /var/www/generate.sh"
         networks:
             - maersk-seacraft

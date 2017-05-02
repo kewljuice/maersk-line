@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 T1=$(date +%s)
 
-logfile=/var/www/generate-status.txt
+logfile=/var/logs/generate-website.log
 touch $logfile
 
 #! Start.
@@ -29,9 +29,8 @@ dbHost='mysql'
 echo "Generating project folder" >> $logfile
 
 #! Get project name.
-echo "Insert Project name:"  >> $logfile
+#echo "Insert Project name:"  >> $logfile
 #read projectInput
-projectInput='demo'
 
 #! Cleanup & display project name.
 projectClean=${projectInput//_/}
@@ -246,16 +245,14 @@ drush en -y $featureList;
 cd $drupal_root
 
 #! Install CiviCRM.
-echo "${cp}Install CiviCRM (y/n)?${cx}"
-#read answer
-answer=y
-if echo "$answer" | grep -iq "^y" ;
+echo "${cp}Install CiviCRM?${cx}"
+#read enablecivicrm
+
+if echo "$enableCivicrm" | grep -iq "^y";
 then
 
-    #TODO Ask for CiviCRM site-url.
-
     #! CiviCRM variables.
-    civiUrl='http://generator.dev/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
+    #civiUrl='http://localhost.8080/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
     civiKey=$(date |md5 | head -c32)
 
     #! Unpack the latest package and verify permissions.
