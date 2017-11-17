@@ -26,7 +26,7 @@ mv _html html
 #! Ask project name.
 #echo "Insert Project name:"
 #read projectInput
-projectInput='demo'
+projectInput='maersk'
 
 #! Cleanup & display project name.
 projectClean=${projectInput//_/}
