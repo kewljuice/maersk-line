@@ -7,6 +7,8 @@ services:
             - ./../data/logs:/var/logs/
     www:
         image: nginx:latest
+        mem_limit: 64m
+        memswap_limit: 64m
         ports:
             - "8080:80"
         volumes_from:
@@ -18,17 +20,28 @@ services:
         depends_on:
             - php
     php:
-        image: cargo:php
+        build: image/cargo-php
+        image: cargo-php
+        mem_limit: 1024m
+        memswap_limit: 1024m
         ports:
             - "8089:9000"
         volumes_from:
             - application
+        environment:
+          PHP_TIMEOUT: 300s
+          PHP_MEMORY_LIMIT: 512M
     drupal:
-        image: cargo:drupal
+        build: image/cargo-drupal
+        image: cargo-drupal
+        mem_limit: 512m
+        memswap_limit: 512m
         volumes_from:
             - application
+        environment:
+          PHP_TIMEOUT: 300s
     build:
-        image: cargo:drupal
+        image: cargo-drupal
         volumes_from:
             - application
         depends_on:
@@ -37,9 +50,11 @@ services:
             - projectInput=demo
             - enableCivicrm=y
             - civiUrl=http://localhost:8080/
-        command: "bash /var/www/generate.sh"
+        # command: "bash /var/www/generate.sh"
     mysql:
         image: mysql
+        mem_limit: 2048m
+        memswap_limit: 2048m
         ports:
             - "8086:3306"
         environment:
