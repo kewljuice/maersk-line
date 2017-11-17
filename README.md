@@ -17,8 +17,6 @@ Install docker for mac via the latest stable installation from [docs.docker.com]
 - Browse to maersk-line folder in terminal
 - Check docker status
 ```bash status.sh```
-- Build docker images
-```bash build.sh```
 - Init docker containers
 ```bash init.sh```
 
