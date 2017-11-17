@@ -57,10 +57,10 @@ services:
         depends_on:
             - drupal
         environment:
-            - projectInput=demo
-            - enableCivicrm=y
-            - civiUrl=http://localhost:8080/
-#        command: "bash /var/www/generate.sh"
+            - projectInput=$COMPOSE_PROJECT_NAME
+            - enableCivicrm=$CIVICRM
+            - civiUrl=$URL
+        command: "bash /var/www/generate.sh"
     mysql:
         image: mysql
         mem_limit: 2048m
