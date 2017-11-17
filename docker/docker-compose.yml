@@ -1,7 +1,7 @@
 version: '2'
 services:
     application:
-        image: tianon/true
+        image: tianon/true:latest
         volumes:
             - ./../data/www:/var/www/
             - ./../data/logs:/var/logs/
@@ -60,13 +60,25 @@ services:
             - projectInput=$COMPOSE_PROJECT_NAME
             - enableCivicrm=$CIVICRM
             - civiUrl=$URL
-        command: "bash /var/www/generate.sh"
+#        command: "bash /var/www/generate.sh"
+    db_share:
+      image: tianon/true:latest
+      volumes:
+          - ./../data/db/mysql/imports:/data/imports
+          - ./../data/db/mysql/exports:/data/exports
+    db_data:
+      image: tianon/true:latest
+      volumes:
+          - ./../data/db/mysql/data:/var/lib/mysql
     mysql:
         image: mysql
         mem_limit: 2048m
         memswap_limit: 2048m
         ports:
             - "8086:3306"
+        volumes_from:
+            - db_data
+            - db_share
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: database
