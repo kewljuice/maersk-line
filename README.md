@@ -22,6 +22,15 @@ Install docker for mac via the latest stable installation from [docs.docker.com]
 - Init docker containers
 ```bash init.sh```
 
+## Containers
+
+- NGiNX
+- PHP
+- Drupal
+- CIVIX
+- MySQL
+- phpMyAdmin
+
 ## Browse
 
 * application: open browser and go to [localhost:8080](http://localhost:8080)

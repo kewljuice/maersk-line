@@ -29,8 +29,8 @@ services:
         volumes_from:
             - application
         environment:
-          PHP_TIMEOUT: 300s
-          PHP_MEMORY_LIMIT: 512M
+            PHP_TIMEOUT: 300s
+            PHP_MEMORY_LIMIT: 512M
     drupal:
         build: image/cargo-drupal
         image: cargo-drupal
@@ -38,9 +38,19 @@ services:
         memswap_limit: 512m
         volumes_from:
             - application
+        depends_on:
+            - php
         environment:
-          PHP_TIMEOUT: 300s
+            PHP_TIMEOUT: 300s
+    civix:
+        build: image/cargo-civix
+        image: cargo-civix
+        volumes_from:
+            - application
+        depends_on:
+            - drupal
     build:
+        build: image/cargo-drupal
         image: cargo-drupal
         volumes_from:
             - application
@@ -50,7 +60,7 @@ services:
             - projectInput=demo
             - enableCivicrm=y
             - civiUrl=http://localhost:8080/
-        # command: "bash /var/www/generate.sh"
+#        command: "bash /var/www/generate.sh"
     mysql:
         image: mysql
         mem_limit: 2048m
