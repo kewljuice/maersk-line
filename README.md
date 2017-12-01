@@ -18,7 +18,11 @@ Install docker for mac via the latest stable installation from [docs.docker.com]
 - Check docker status
 ```bash status.sh```
 - Init docker containers
-```bash init.sh```
+```bash install.sh```
+- Restart docker containers
+```bash restart.sh```
+- Clean up website + databases
+```bash remove.sh```
 
 ## Containers
 
