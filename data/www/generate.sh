@@ -286,8 +286,8 @@ then
     echo "Install CiviCRM" >> $logfile
 
     #! Create CiviCRM folders.
-    mkdir www/sites/all/civicrm
-    mkdir www/sites/all/civicrm/extensions
+    mkdir html/sites/all/civicrm
+    mkdir html/sites/all/civicrm/extensions
 
     #! Create CiviCRM database via MySQL.
     dbCiviCRM=$projectName'_c'
