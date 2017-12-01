@@ -53,9 +53,9 @@ touch exclude-list.txt
 printf '%s\n' "${excludeList[@]}" > exclude-list.txt
 
 #! Create .gitignore from list.
-gitignoreList=("# Ignore configuration files that may contain sensitive information." "www/sites/*/*settings.php")
-gitignoreList=("${gitignoreList[@]}" "# Ignore paths that contain user-generated content." ".idea" "www/sites/*/files" "www/sites/*/private")
-gitignoreList=("${gitignoreList[@]}" "# Ignore caches." ".idea" "www/sites/all/drush/dump.sql" "*.sql" "*.tar" "*.zip" "*.gz" "www/sites/all/civicrm/extensions/cache")
+gitignoreList=("# Ignore configuration files that may contain sensitive information." "html/sites/*/*settings.php")
+gitignoreList=("${gitignoreList[@]}" "# Ignore paths that contain user-generated content." ".idea" "html/sites/*/files" "html/sites/*/private")
+gitignoreList=("${gitignoreList[@]}" "# Ignore caches." ".idea" "html/sites/all/drush/dump.sql" "*.sql" "*.tar" "*.zip" "*.gz" "html/sites/all/civicrm/extensions/cache")
 gitignoreList=("${gitignoreList[@]}" "# Ignore ds_store." "/.DS_Store" "*/.DS_Store" "*.DS_Store")
 gitignoreList=("${gitignoreList[@]}" "# Ignore generate script(s)." "generate.sh" "cleanup.sh")
 touch .gitignore
@@ -72,8 +72,6 @@ git commit -m "Initial commit." --quiet
 
 #! Create git branches.
 git checkout -b development
-git checkout master
-git checkout -b production
 git checkout master
 git checkout -b acceptance
 git checkout master
@@ -245,15 +243,19 @@ drush en -y $featureList;
 cd $drupal_root
 
 #! Install CiviCRM.
-echo "${cp}Install CiviCRM?${cx}"
+echo "${cp}Install CiviCRM?${cx}" >> $logfile
 #read enablecivicrm
 
 if echo "$enableCivicrm" | grep -iq "^y";
 then
 
+    #! Heading.
+    echo "Download CiviCRM" >> $logfile
+
     #! CiviCRM variables.
     #civiUrl='http://localhost.8080/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
-    civiKey=$(date |md5 | head -c32)
+    #civiKey=$(date |md5 | head -c32)
+    civiKey=$(date |md5sum | head -c32)
 
     #! Unpack the latest package and verify permissions.
     curl -L "https://download.civicrm.org/civicrm-4.7.16-drupal.tar.gz" -o civicrm.tar.gz
@@ -267,6 +269,9 @@ then
 
     #TODO Unpack CiviCRM language(s).
 
+    #! Heading.
+    echo "Download CiviCRM feature" >> $logfile
+
     #! Download feature with default parameters.
     cd sites/all/modules/features
     git clone https://github.com/kewljuice/ctrl_feature_civicrm
@@ -276,6 +281,9 @@ then
     #! Commit CiviCRM Feature to GIT
     git add -A
     git commit -m "Downloaded Feature: ctrl_feature_civicrm." --quiet
+
+    #! Heading.
+    echo "Install CiviCRM" >> $logfile
 
     #! Create CiviCRM folders.
     mkdir www/sites/all/civicrm
@@ -311,6 +319,9 @@ then
 
     #TODO Remove CiviCRM feature.
 
+    #! Heading.
+    echo "Install CiviCRM extensions" >> $logfile
+
     #! Download & enable CiviCRM extensions.
     civicrm_root=$(pwd)
     cd sites/all/civicrm/extensions
@@ -330,6 +341,9 @@ then
     #! Clean caches.
     drush cc civicrm
 fi
+
+#! Heading.
+echo "Finalize installation" >> $logfile
 
 #! Add Caching settings to settings.php.
 cachingList=('<?php');
@@ -371,12 +385,10 @@ drush core-cron
 #! mv generate.sh _generate.sh
 
 #! GIT merge master to other branches.
-git checkout acceptance
-git merge master --quiet
-git checkout production
-git merge master --quiet
-git checkout development
-git merge master --quiet
+#git checkout acceptance
+#git merge master --quiet
+#git checkout development
+#git merge master --quiet
 
 #! Stop timer.
 T2=$(date +%s)
