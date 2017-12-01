@@ -1,4 +1,4 @@
-version: '2'
+version: '2.3'
 services:
     application:
         image: tianon/true:latest
@@ -79,6 +79,8 @@ services:
         volumes_from:
             - db_data
             - db_share
+        volumes:
+            - ./mysql.conf:/etc/mysql/conf.d/custom.cnf
         environment:
             MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: database
