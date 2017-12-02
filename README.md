@@ -52,7 +52,7 @@ Install docker for mac via the latest stable installation from [docs.docker.com]
 * Complete docker containers & images (careful!!!)
   * Browse to maersk-line folder in terminal
   * Cleanup images and containers 
-  ```bash cleanup.sh```
+  ```bash docker-cleanup.sh```
 * Drupal/CiviCRM installation in container
   * Go to Drupal container 
   ```docker exec -it docker_drupal_X sh bash```
