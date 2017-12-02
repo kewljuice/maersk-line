@@ -9,8 +9,6 @@ echo "*********" >> $logfile
 echo "generator" >> $logfile
 echo "*********" >> $logfile
 
-#TODO: Path variables?
-
 #! Generator variables.
 drupalUser='admin'
 drupalPass='admin'
@@ -76,8 +74,6 @@ git checkout master
 git checkout -b acceptance
 git checkout master
 
-#TODO: Add GIT remote functionality.
-
 #! Heading MySQL.
 echo "Generating MySQL" >> $logfile
 
@@ -113,7 +109,7 @@ mkdir /var/www/html/sites/all/modules/custom
 git_root=$(pwd)
 cd /var/www/html
 
-#! Commit Drupal to GIT
+#! Commit Drupal to GIT.
 git add -A
 git commit -m "Downloaded Drupal 7." --quiet
 
@@ -132,7 +128,7 @@ downloadList+=(admin_menu devel module_filter coffee)
 for i in "${downloadList[@]}"
 do
     drush dl -y $i
-    #! Commit Drupal contrib modules to GIT
+    #! Commit Drupal contrib modules to GIT.
     git add -A
     git commit -m "Downloaded Drupal contrib module: $i." --quiet
 done
@@ -147,7 +143,7 @@ themeList=(bootstrap tao rubik)
 for i in "${themeList[@]}"
 do
     drush dl -y $i
-    #! Commit Drupal contrib modules to GIT
+    #! Commit Drupal contrib modules to GIT.
     git add -A
     git commit -m "Downloaded Drupal theme: $i." --quiet
 done
@@ -183,7 +179,7 @@ drush pm-disable -y bartik
 drush vset admin_theme rubik
 drush pm-disable -y seven
 
-#! Generate content (for site_frontpage)
+#! Generate content. (for site_frontpage)
 drush generate-content 1 --types=page
 
 #! Heading.
@@ -223,7 +219,7 @@ unzip ckeditor.zip
 mv ckeditor sites/all/libraries
 rm ckeditor.zip
 
-#! Commit Commit Libraries to GIT
+#! Commit Commit Libraries to GIT.
 git add sites/all/libraries/
 git commit -m "Downloaded library: CKeditor." --quiet
 
@@ -256,18 +252,27 @@ then
     #civiUrl='http://localhost.8080/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
     #civiKey=$(date |md5 | head -c32)
     civiKey=$(date |md5sum | head -c32)
+    civiVersion=4.7.16
 
     #! Unpack the latest package and verify permissions.
-    curl -L "https://download.civicrm.org/civicrm-4.7.16-drupal.tar.gz" -o civicrm.tar.gz
+    curl -L "https://download.civicrm.org/civicrm-$civiVersion-drupal.tar.gz" -o civicrm.tar.gz
     tar -xf civicrm.tar.gz -C sites/all/modules/contrib/
     rm -rf civicrm.tar.gz
     chmod 775 sites/default
 
-    #! Commit Drupal to GIT
+    #! Commit CiviCRM to GIT.
     git add -A
-    git commit -m "Downloaded CiviCRM 4.7.16." --quiet
+    git commit -m "Downloaded CiviCRM $civiVersion." --quiet
 
-    #TODO Unpack CiviCRM language(s).
+    #! Unpack CiviCRM language(s).
+    curl -L "https://download.civicrm.org/civicrm-$civiVersion-l10n.tar.gz" -o civicrm-l10n.tar.gz
+    mkdir sites/all/modules/contrib/civicrm/l10n
+    tar -xf civicrm-l10n.tar.gz -C sites/all/modules/contrib/
+    rm -rf civicrm-l10n.tar.gz
+
+    #! Commit CiviCRM l10n to GIT.
+    git add -A
+    git commit -m "Downloaded CiviCRM l10n $civiVersion." --quiet
 
     #! Heading.
     echo "Download CiviCRM feature" >> $logfile
@@ -278,7 +283,7 @@ then
     rm -rf ctrl_feature_civicrm/.git
     cd $drupal_root
 
-    #! Commit CiviCRM Feature to GIT
+    #! Commit CiviCRM Feature to GIT.
     git add -A
     git commit -m "Downloaded Feature: ctrl_feature_civicrm." --quiet
 
@@ -286,8 +291,8 @@ then
     echo "Install CiviCRM" >> $logfile
 
     #! Create CiviCRM folders.
-    mkdir www/sites/all/civicrm
-    mkdir www/sites/all/civicrm/extensions
+    mkdir sites/all/civicrm
+    mkdir sites/all/civicrm/extensions
 
     #! Create CiviCRM database via MySQL.
     dbCiviCRM=$projectName'_c'
@@ -381,8 +386,8 @@ chmod 777 sites/all/themes
 drush cc all
 drush core-cron
 
-#TODO: Remove generate.sh.
-#! mv generate.sh _generate.sh
+#! Remove generate.sh.
+#mv generate.sh _generate.sh
 
 #! GIT merge master to other branches.
 #git checkout acceptance

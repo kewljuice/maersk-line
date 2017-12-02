@@ -16,13 +16,13 @@ Install docker for mac via the latest stable installation from [docs.docker.com]
 ```$ git clone -b 1.0 --depth 1  https://github.com/kewljuice/maersk-line```
 - Browse to maersk-line folder in terminal
 - Check docker status
-```bash status.sh```
-- Init docker containers
-```bash install.sh```
+```bash docker-status.sh```
 - Restart docker containers
-```bash restart.sh```
-- Clean up website + databases
-```bash remove.sh```
+```bash docker-restart.sh```
+- Init website
+```bash website-install.sh```
+- Remove website
+```bash website-remove.sh```
 
 ## Containers
 
