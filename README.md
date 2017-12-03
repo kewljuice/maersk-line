@@ -19,10 +19,14 @@ Install docker for mac via the latest stable installation from [docs.docker.com]
 ```bash docker-status.sh```
 - Restart docker containers
 ```bash docker-restart.sh```
+- Remove docker container and images
+```bash docker-cleanup.sh```
 - Init website
 ```bash website-install.sh```
 - Remove website
 ```bash website-remove.sh```
+- Update CiviCRM
+```docker-compose run --rm build bash /var/www/civicrm-update.sh```
 
 ## Containers
 

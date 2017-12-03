@@ -40,6 +40,7 @@ services:
             - application
         depends_on:
             - php
+            - mysql
         environment:
             PHP_TIMEOUT: 300s
     civix:
