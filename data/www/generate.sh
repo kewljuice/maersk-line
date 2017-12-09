@@ -53,7 +53,8 @@ printf '%s\n' "${excludeList[@]}" > exclude-list.txt
 #! Create .gitignore from list.
 gitignoreList=("# Ignore configuration files that may contain sensitive information." "html/sites/*/*settings.php")
 gitignoreList=("${gitignoreList[@]}" "# Ignore paths that contain user-generated content." ".idea" "html/sites/*/files" "html/sites/*/private")
-gitignoreList=("${gitignoreList[@]}" "# Ignore caches." ".idea" "html/sites/all/drush/dump.sql" "*.sql" "*.tar" "*.zip" "*.gz" "html/sites/all/civicrm/extensions/cache")
+gitignoreList=("${gitignoreList[@]}" "# Ignore caches." ".idea" "html/sites/all/drush/dump.sql" "*.tar" "*.zip" "*.gz" "html/sites/all/civicrm/extensions/cache")
+gitignoreList=("${gitignoreList[@]}" "# Ignore sql files not in sql folders." "*.sql" "!**/sql/*.sql")
 gitignoreList=("${gitignoreList[@]}" "# Ignore ds_store." "/.DS_Store" "*/.DS_Store" "*.DS_Store")
 gitignoreList=("${gitignoreList[@]}" "# Ignore generate script(s)." "generate.sh" "cleanup.sh")
 touch .gitignore
