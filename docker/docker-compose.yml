@@ -31,9 +31,9 @@ services:
         environment:
             PHP_TIMEOUT: 300s
             PHP_MEMORY_LIMIT: 512M
-    drupal:
-        build: image/cargo-drupal
-        image: cargo-drupal
+    civicrm:
+        build: image/cargo-civicrm
+        image: cargo-civicrm
         mem_limit: 512m
         memswap_limit: 512m
         volumes_from:
@@ -43,20 +43,12 @@ services:
             - mysql
         environment:
             PHP_TIMEOUT: 300s
-    civix:
-        build: image/cargo-civix
-        image: cargo-civix
-        volumes_from:
-            - application
-        depends_on:
-            - drupal
     build:
-        build: image/cargo-drupal
-        image: cargo-drupal
+        build: image/cargo-civicrm
         volumes_from:
             - application
         depends_on:
-            - drupal
+            - civicrm
         environment:
             - projectInput=$COMPOSE_PROJECT_NAME
             - enableCivicrm=$CIVICRM
