@@ -5,12 +5,25 @@ services:
         volumes:
             - ./../data/www:/var/www/
             - ./../data/logs:/var/logs/
+    varnish:
+        build: image/cargo-varnish
+        image: cargo-varnish
+        ports:
+            - "8080:80"
+        mem_limit: 512m
+        memswap_limit: 512m
+        volumes:
+            - ./varnish.conf:/etc/varnish/default.vcl
+        depends_on:
+            - www
+        environment:
+            VIRTUAL_HOST: $VIRTUAL_HOST
     www:
         image: nginx:latest
         mem_limit: 64m
         memswap_limit: 64m
         ports:
-            - "8080:80"
+            - "80"
         volumes_from:
             - application
         volumes:
@@ -25,7 +38,7 @@ services:
         mem_limit: 1024m
         memswap_limit: 1024m
         ports:
-            - "8089:9000"
+            - "9000"
         volumes_from:
             - application
         environment:
@@ -52,7 +65,7 @@ services:
         environment:
             - projectInput=$COMPOSE_PROJECT_NAME
             - enableCivicrm=$CIVICRM
-            - civiUrl=$URL
+            - civiUrl=$CIVICRM_URL
 #        command: "bash /var/www/generate.sh"
     db_share:
       image: tianon/true:latest
@@ -68,7 +81,7 @@ services:
         mem_limit: 2048m
         memswap_limit: 2048m
         ports:
-            - "8086:3306"
+            - "3306"
         volumes_from:
             - db_data
             - db_share
