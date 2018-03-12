@@ -77,7 +77,7 @@ services:
       volumes:
           - ./../data/db/mysql/data:/var/lib/mysql
     mysql:
-        image: mysql
+        image: mysql:5.7
         mem_limit: 2048m
         memswap_limit: 2048m
         ports:
