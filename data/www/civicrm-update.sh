@@ -43,7 +43,7 @@ chown -R 1000:www-data sites/default/files/civicrm/templates_c
 chmod -R 775 sites/default/files/civicrm/templates_c
 
 #! Unpack the latest package and verify permissions.
-civiVersion=4.7.28
+civiVersion=4.7.31
 
 curl -L "https://download.civicrm.org/civicrm-$civiVersion-drupal.tar.gz" -o civicrm.tar.gz
 tar -xf civicrm.tar.gz -C sites/all/modules/contrib/
