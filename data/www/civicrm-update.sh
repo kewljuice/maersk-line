@@ -23,7 +23,7 @@ drush cc civicrm
 # drush eval 'variable_set("civicrmtheme_theme_admin", "rubik")';
 
 #! Backup CiviCRM database.
-#drush civicrm-sql-dump --result-file=./civicrm.sql
+drush civicrm-sql-dump --result-file=./civicrm.sql
 
 #! Backup Drupal database.
 #drush sql-dump --result-file=./drupal.sql
@@ -43,7 +43,7 @@ chown -R 1000:www-data sites/default/files/civicrm/templates_c
 chmod -R 775 sites/default/files/civicrm/templates_c
 
 #! Unpack the latest package and verify permissions.
-civiVersion=4.7.31
+civiVersion=5.1.0
 
 curl -L "https://download.civicrm.org/civicrm-$civiVersion-drupal.tar.gz" -o civicrm.tar.gz
 tar -xf civicrm.tar.gz -C sites/all/modules/contrib/

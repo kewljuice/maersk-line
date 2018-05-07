@@ -253,7 +253,7 @@ then
     #civiUrl='http://localhost.8080/' #! vb.: http://generator.dev/ - with CLOSING SLASH.
     #civiKey=$(date |md5 | head -c32)
     civiKey=$(date |md5sum | head -c32)
-    civiVersion=4.7.30
+    civiVersion=5.0.0
 
     #! Unpack the latest package and verify permissions.
     curl -L "https://download.civicrm.org/civicrm-$civiVersion-drupal.tar.gz" -o civicrm.tar.gz
